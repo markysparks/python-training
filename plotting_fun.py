@@ -16,6 +16,7 @@ def do_plot():
 
     fig.update_xaxes(title_text='Date and Time')
     fig.update_yaxes(title_text='Degrees C')
+    fig.update_layout(title_text='Aviemore Data')
 
     # Show the plot
     fig.show()
