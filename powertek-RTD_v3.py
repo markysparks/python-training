@@ -6,7 +6,7 @@ DEFAULT_BAUD = 9600  # Default Powetek RTD baud rate is 9600
 START_TEMP = -30  # The test starting temperature
 END_TEMP = 70  # The test ending temperature
 TEMP_INTERVAL = 10  # The temperature interval between each step
-STEP_TIME_DELAY = 2  # The time delay between each step (seconds
+STEP_TIME_DELAY = 600  # The time delay between each step (seconds
 
 
 def run_temp_test(port, baud, start_temp, end_temp, step_time_delay, temp_interval):
