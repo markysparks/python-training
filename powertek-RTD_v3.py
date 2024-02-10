@@ -1,8 +1,7 @@
 import serial
 import time
 
-COM_PORT = "/dev/tty.usbserial-B002XUJU"
-# COM_PORT = "COM6"
+COM_PORT = "COM6"
 DEFAULT_BAUD = 9600  # Default Powetek RTD baud rate is 9600
 START_TEMP = -30  # The test starting temperature
 END_TEMP = 70  # The test ending temperature
