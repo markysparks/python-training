@@ -1,5 +1,5 @@
 import dash
-from dash import dcc
+from dash import dcc, Input, Output
 from dash import html
 import dash_bootstrap_components as dbc
 import serial.tools.list_ports
@@ -47,7 +47,7 @@ app.layout = dbc.Container([
                       dbc.Label("Serial Port:",
                                 style={"margin-right": "30px", "margin-left": "30px", }),
                       dcc.Dropdown(id="serial-port",
-                                   style={"width": "70%"},
+                                   style={"width": "62%"},
                                    options=[{"label": p, "value": p} for p in ports]),
                   ]),
                   html.Br(),
@@ -56,26 +56,26 @@ app.layout = dbc.Container([
                       dbc.Label("IP Address:",
                                 style={"margin-right": "30px", "margin-left": "30px"}),
                       dbc.Input(id="ip", type="text", value="192.168.1.10",
-                                style={"margin-right": "30px", "margin-left": "5px", "width": "22%"}),
+                                style={"width": "26%"}),
                   ]),
                   html.Br(),
 
                   dbc.Row([
                       dbc.Col([
                           dbc.CardGroup([
-                              dbc.Col(dbc.Label("Min Temp (C):",
+                              dbc.Col(dbc.Label("Min Temperature (C):",
                                                 ), style={"margin-left": "30px"}, width=6),
                               dbc.Col(dbc.Input(id="min-temp", type="number", value="-30",
-                                                ), width=3),
+                                                ), width=4),
                           ],),
                       ]),
 
                       dbc.Col([
                           dbc.CardGroup([
-                              dbc.Col(dbc.Label("Max Temp (C):",
+                              dbc.Col(dbc.Label("Max Temperature (C):",
                                                 ), width=6),
                               dbc.Col(dbc.Input(id="max-temp", type="number", value="70",
-                                                ), width=3),
+                                                ), width=4),
                           ]),
                       ]),
                   ]),
@@ -86,17 +86,17 @@ app.layout = dbc.Container([
                               dbc.Col(dbc.Label("Time interval (secs):",
                                                 ), style={"margin-left": "30px"}, width=6),
                               dbc.Col(
-                                  dbc.Input(id="time-interval", type="number", value="10",
-                                            ), width=3),
+                                  dbc.Input(id="time-interval", type="number", value="10", min=1
+                                            ), width=4),
                           ]),
                       ]),
 
                       dbc.Col([
                           dbc.CardGroup([
-                              dbc.Col(dbc.Label("Number of cycles :",
+                              dbc.Col(dbc.Label("Number of cycles: min>max>min",
                                                 ), width=6),
-                              dbc.Col(dbc.Input(id="num-cycles", type="number", value="1",
-                                                ), width=3),
+                              dbc.Col(dbc.Input(id="num-cycles", type="number", value="1", min=1
+                                                ), width=4),
                           ]),
                       ]),
 
@@ -113,7 +113,7 @@ app.layout = dbc.Container([
              style={"margin-left": "30px", "margin-bottom": "20px", "margin-top": "10px",
                     "width": "20%"}),
 
-],  style={"width": "700px"})
+],  style={"width": "750px"})
 
 
 @app.callback(
@@ -160,6 +160,17 @@ def run_test(n_clicks, include_test, interface, serial_port, ip, min_temp, max_t
         return html.Div(f"Running test with arguments: {args}")
     else:
         return dash.no_update
+
+
+@app.callback(
+    Output("start-test", "disabled"),
+    [Input("interface", "value"),
+     Input("serial-port", "value")]
+)
+def disable_start(interface, serial_port):
+    if interface == "serial" and not serial_port:
+        return True
+    return False
 
 
 if __name__ == "__main__":
