@@ -165,10 +165,15 @@ def run_test(n_clicks, include_test, interface, serial_port, ip, min_temp, max_t
 @app.callback(
     Output("start-test", "disabled"),
     [Input("interface", "value"),
-     Input("serial-port", "value")]
+     Input("serial-port", "value"),
+     Input("ip", "value")],
 )
-def disable_start(interface, serial_port):
+def disable_start(interface, serial_port, ip):
+    if interface is None:
+        return True
     if interface == "serial" and not serial_port:
+        return True
+    if interface == "ethernet" and not ip:
         return True
     return False
 
