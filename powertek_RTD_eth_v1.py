@@ -1,12 +1,12 @@
 import telnetlib
 import time
 
-HOST = "192.168.1.10"
+HOST = ""
 PORT = 23
 START_TEMP = -30  # The test starting temperature
-END_TEMP = 70  # The test ending temperature
+END_TEMP = 20  # The test ending temperature
 TEMP_INTERVAL = 10  # The temperature interval between each step
-STEP_TIME_DELAY = 600  # The time delay between each step (seconds
+STEP_TIME_DELAY = 1  # The time delay between each step (seconds
 
 
 def run_temp_test(host, port, start_temp, end_temp, step_time_delay, temp_interval):
@@ -21,7 +21,7 @@ def run_temp_test(host, port, start_temp, end_temp, step_time_delay, temp_interv
     # the instrument to process the 'remote control' command.
     with telnetlib.Telnet(host, port) as tn:
         print("Putting Powertek RTD instrument into remote command mode")
-        tn.write(b"SYST:REM\r\n")
+        tn.write("SYST:REM\r\n".encode("ascii"))
         # print(tn.read_all().decode("ascii"))
         time.sleep(3)
 
@@ -41,7 +41,7 @@ def run_temp_test(host, port, start_temp, end_temp, step_time_delay, temp_interv
 def set_temp(tn, temp):
     """Function to set device temperature using the SOUR:PLAT temp command."""
     command = f"SOUR:PLAT {temp}\r\n"
-    tn.write(bytes(command))
+    tn.write(command.encode("ascii"))
     print(f"Setting temperature to {temp}C")
 
 
