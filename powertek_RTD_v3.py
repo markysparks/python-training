@@ -1,11 +1,10 @@
 import serial
 import time
-import math
 
 COM_PORT = "COM6"
 DEFAULT_BAUD = 9600  # Default Powetek RTD baud rate is 9600
 START_TEMP = -30  # The test starting temperature
-END_TEMP = 70 # The test ending temperature
+END_TEMP = 70  # The test ending temperature
 TEMP_INTERVAL = 10  # The temperature interval between each step
 STEP_TIME_DELAY = 600  # The time delay between each step (seconds
 
@@ -46,4 +45,6 @@ def set_temp(ser, temp):
 
 
 if __name__ == "__main__":
-    run_temp_test(COM_PORT, DEFAULT_BAUD, START_TEMP, END_TEMP, STEP_TIME_DELAY, TEMP_INTERVAL)
+    run_temp_test(
+        COM_PORT, DEFAULT_BAUD, START_TEMP, END_TEMP, STEP_TIME_DELAY, TEMP_INTERVAL
+    )
